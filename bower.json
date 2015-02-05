@@ -1,0 +1,6 @@
+{
+  "name": "Netwerken",
+  "dependencies": {
+    "semantic": "~1.8.1"
+  }
+}

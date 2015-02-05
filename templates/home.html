@@ -1,19 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="static/components/semantic/dist/semantic.min.css">
   </head>
 
   <body>
+    <h1 class="ui centered aligned header">Netwerken DNS</h1>
 
-    <form method="GET">
-      <label for="domain">Domein:</label><input name="domain" value="{{request.GET.domain}}">
-      <label for="server">Server:</label><input name="server" value="{{request.GET.server}}">
-      <button type="submit">Query</button>
-    </form>
+    <div class="ui three column centered grid">
+      <div class="column ui">
+        <form method="GET" class="ui form primary center aligned segment">
 
-    {{if answers}}
+          <div class="field">
+            <label for="domain">Domein</label>
+            <div class="ui huge input">
+              <input name="domain" placeholder="Domein" value="{{request.GET.domain}}" style="text-align: center;">
+            </div>
+          </div>
 
-    {{/if}}
+          <div class="field">
+            <label for="domain">DNS Server</label>
+            <div class="ui huge input">
+              <input name="server" placeholder="Server" value="{{request.GET.server}}" style="text-align: center;">
+            </div>
+          </div>
+
+          <button type="submit" class="ui big blue submit button">Query</button>
+        </form>
+      </div>
+    </div>
+
+    {% if error %}
+    <div class="ui negative message">
+      <div class="header">Er is een fout opgetreden</div>
+      <code>{{error}}</code>
+    </div>
+    {% endif%}
+  </div>
+
+  {% if queried %}
+  <div class="ui two column centered grid">
+    <div class="ui column ui">
+
+      <h2 class="ui centered aligned header">Answers</h2>
+      {% include "table.html" with records=answers %}
+
+      <h2 class="ui centered aligned header">Authority records</h2>
+      {% include "table.html" with records=authority %}
+
+      <h2 class="ui centered aligned header">Additional records</h2>
+      {% include "table.html" with records=additional %}
+
+    </div>
+  </div>
+  {% endif %}
 
   </body>
 </html>

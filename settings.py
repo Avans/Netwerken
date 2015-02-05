@@ -82,6 +82,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [os.path.realpath('./static')]
+
 TEMPLATE_DIRS = (
-    os.path.realpath('.'),
+    os.path.realpath('./templates'),
 )
