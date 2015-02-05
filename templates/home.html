@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+
+  <body>
+
+    <form method="GET">
+      <label for="domain">Domein:</label><input name="domain" value="{{request.GET.domain}}">
+      <label for="server">Server:</label><input name="server" value="{{request.GET.server}}">
+      <button type="submit">Query</button>
+    </form>
+
+    {{if answers}}
+
+    {{/if}}
+
+  </body>
+</html>
