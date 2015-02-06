@@ -1,8 +1,7 @@
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseNotFound
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
 import dns.message, dns.query
-from pprint import pprint
 
 def home(request):
     template_vars = {'request': request}

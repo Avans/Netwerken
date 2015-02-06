@@ -2,6 +2,11 @@
 <html>
   <head>
     <link rel="stylesheet" href="static/components/semantic/dist/semantic.min.css">
+    <style type="text/css">
+    body {
+      margin-top: 20px;
+    }
+    </style>
   </head>
 
   <body>
@@ -43,7 +48,7 @@
     <div class="ui column ui">
 
       <h2 class="ui centered aligned header">Answers</h2>
-      {% include "table.html" with records=answers %}
+      {% include "table.html" with records=answer %}
 
       <h2 class="ui centered aligned header">Authority records</h2>
       {% include "table.html" with records=authority %}
