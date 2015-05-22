@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
-import dns.message, dns.query
+import dns.message, dns.query, urllib2
 
 def home(request):
     template_vars = {'request': request}
@@ -41,3 +41,14 @@ def home(request):
 
 
     return render_to_response('home.html', template_vars)
+
+def weather(request):
+    response = HttpResponse(content_type='application/json')
+    response["Access-Control-Allow-Origin"] = "*"
+
+    if "location" not in request.GET:
+        response.content = "Missing location parameter"
+        return response
+
+    response.content = urllib2.urlopen('http://api.openweathermap.org/data/2.5/weather?q='+request.GET["location"]).read()
+    return response
