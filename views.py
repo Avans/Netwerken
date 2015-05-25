@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from app.models import ChatMessage
+from django.views.decorators.csrf import csrf_exempt
 
-import dns.message, dns.query, urllib2, json, random
+import dns.message, dns.query, urllib2, json, random, datetime, time, pytz
 
 def home(request):
     template_vars = {'request': request}
@@ -78,4 +80,38 @@ def quote(request):
 ]
     response.content = random.choice(quotes)
 
+    return response
+
+@csrf_exempt
+def chat(request):
+    response = HttpResponse(content_type='application/json')
+    response["Access-Control-Allow-Origin"] = "*"
+
+    if request.method == 'POST':
+        input = None
+        try:
+            input = json.loads(request.body)
+        except:
+            response.content = json.dumps({'error': 'Not valid JSON'})
+            return response
+
+        if not isinstance(input, dict):
+            response.content = json.dumps({'error': 'JSON should be an object'})
+        elif 'nickname' not in input:
+            response.content = json.dumps({'error': 'JSON object should have "nickname" property'})
+        elif 'message' not in input:
+            response.content = json.dumps({'error': 'JSON object should have "message" property'})
+        else:
+            c = ChatMessage()
+            c.nickname = str(input['nickname'])
+            c.message = str(input['message'])
+            c.save()
+            response.content = json.dumps({'result': 'ok'})
+    else:
+        def message_to_dict(m):
+            return {'nickname': m.nickname, 'message': m.message, 'time': int(time.mktime(m.time.utctimetuple()))}
+
+        messages = ChatMessage.objects.all().order_by('time')[0:15]
+        messages = map(message_to_dict, messages)
+        response.content = json.dumps(messages)
     return response

@@ -4,4 +4,5 @@ urlpatterns = patterns('',
     url(r'^$', 'views.home'),
     url(r'^weather$', 'views.weather'),
     url(r'^quote$', 'views.quote'),
+    url(r'^chat$', 'views.chat'),
 )
