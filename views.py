@@ -111,7 +111,7 @@ def chat(request):
         def message_to_dict(m):
             return {'nickname': m.nickname, 'message': m.message, 'time': int(time.mktime(m.time.utctimetuple()))}
 
-        messages = ChatMessage.objects.all().order_by('time')[0:15]
+        messages = ChatMessage.objects.all().order_by('-time')[0:15]
         messages = map(message_to_dict, messages)
         response.content = json.dumps(messages)
     return response
