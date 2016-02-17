@@ -13,7 +13,7 @@ def home(request):
         domain = request.GET['domain']
         server = request.GET['server']
 
-        query = dns.message.make_query(domain, dns.rdatatype.ANY, dns.rdataclass.IN)
+        query = dns.message.make_query(domain, dns.rdataclass.IN)
 
         # Disable 'Recursion Desired' flag
         query.flags ^= dns.flags.RD
