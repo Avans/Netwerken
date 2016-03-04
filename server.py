@@ -1,5 +1,5 @@
 from socket import *
-import thread
+import thread, threading
 
 def handler(clientsock,addr):
     while True:
@@ -18,4 +18,7 @@ def start():
         clientsock, addr = serversock.accept()
         thread.start_new_thread(handler, (clientsock, addr))
 
-start()
+def start_background():
+    thread = threading.Thread(target=start)
+    thread.daemon = True
+    thread.start()

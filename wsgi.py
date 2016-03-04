@@ -16,7 +16,7 @@ if path not in sys.path:
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
 import server
-server.start()
+server.start_background()
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
