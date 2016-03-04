@@ -1,13 +1,21 @@
-import SocketServer, threading
+from socket import *
+import thread
+
+def handler(clientsock,addr):
+    while True:
+        data = clientsock.recv(1024)
+        if not data:
+            clientsock.close()
+            break
 
 def start():
-    class BasicTCPHandler(SocketServer.BaseRequestHandler):
-        def handle(self):
-            while True:
-                print self.request.recv(1024)
+    ADDR = ('0.0.0.0', 31512)
+    serversock = socket(AF_INET, SOCK_STREAM)
+    serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+    serversock.bind(ADDR)
+    serversock.listen(5)
+    while 1:
+        clientsock, addr = serversock.accept()
+        thread.start_new_thread(handler, (clientsock, addr))
 
-    server = SocketServer.TCPServer(('0.0.0.0', 9998), BasicTCPHandler)
-
-    thread = threading.Thread(target=server.serve_forever)
-    thread.daemon = True
-    thread.start()
+start()
