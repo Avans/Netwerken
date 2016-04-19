@@ -53,7 +53,7 @@ def weather(request):
         response.content = "Missing location parameter"
         return response
 
-    response.content = urllib2.urlopen('http://api.openweathermap.org/data/2.5/weather?q='+request.GET["location"]).read()
+    response.content = urllib2.urlopen('http://api.openweathermap.org/data/2.5/weather?q='+request.GET["location"]+'&APPID=85428cebf466aa9587c95d255c874865').read()
     return response
 
 def quote(request):
